@@ -21,6 +21,10 @@ def main():
     # Initialize agent
     if 'agent' not in st.session_state:
         try:
+                        # Check if OpenAI API key is available
+            if not os.getenv("OPENAI_API_KEY"):
+                st.error("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+                st.stop()
             st.session_state.agent = AppointmentAgent()
         except Exception as e:
             st.error(f"Failed to initialize AI agent: {str(e)}")
