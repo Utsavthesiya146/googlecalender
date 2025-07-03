@@ -11,7 +11,11 @@ class AppointmentAgent:
         """Initialize the appointment agent with OpenAI and Google Calendar services."""
         # the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
         # do not change this unless explicitly requested by the user
-        self.openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+               api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+        
+        self.openai_client = OpenAI(api_key=api_key)
         self.calendar_service = GoogleCalendarService()
         
         self.system_prompt = """
